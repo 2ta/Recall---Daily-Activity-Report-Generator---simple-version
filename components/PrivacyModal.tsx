@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { X, Shield, Lock, Globe, Database } from 'lucide-react';
+import { Logo } from './Logo';
 
 interface PrivacyModalProps {
   isOpen: boolean;
@@ -18,10 +19,7 @@ export const PrivacyModal: React.FC<PrivacyModalProps> = ({ isOpen, onClose }) =
         
         <div className="flex items-center justify-between p-5 md:p-6 border-b border-slate-800 bg-slate-900/50 backdrop-blur sticky top-0 z-10">
           <div className="flex items-center gap-3">
-            <div className="p-2 rounded-xl bg-indigo-500/10 text-indigo-400">
-              <Shield className="w-5 h-5" />
-            </div>
-            <h2 className="text-xl font-bold text-slate-100 tracking-tight">Privacy & Security</h2>
+            <Logo size="sm" />
           </div>
           <button 
             onClick={onClose} 

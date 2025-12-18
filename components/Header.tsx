@@ -1,7 +1,8 @@
 
 import React from 'react';
-import { BrainCircuit, FileText, Calendar, ChevronLeft, ChevronRight, Bell, BellOff, Sparkles, CalendarDays, Download, Info } from 'lucide-react';
+import { Calendar, ChevronLeft, ChevronRight, Sparkles, Download, Info } from 'lucide-react';
 import { ReportType } from '../types';
+import { Logo } from './Logo';
 
 interface HeaderProps {
   currentDate: Date;
@@ -49,11 +50,9 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <header className="flex-none h-16 md:h-20 border-b border-slate-800/50 bg-slate-900/50 backdrop-blur-xl px-2 md:px-6 flex items-center justify-between z-40">
-      <div className="flex items-center gap-2 text-indigo-400">
-        <div className="flex items-center gap-2 p-1.5 md:p-2">
-           <BrainCircuit className="w-7 h-7 md:w-8 md:h-8 shrink-0" />
-           <span className="text-xl md:text-2xl font-black tracking-tighter text-slate-100 hidden sm:inline">RECALL</span>
-        </div>
+      <div className="flex items-center gap-2">
+        <Logo size="md" className="hidden xs:flex" />
+        <Logo size="sm" showText={false} className="xs:hidden" />
       </div>
 
       <div className="flex items-center gap-0.5 md:gap-3 bg-slate-800/40 rounded-full px-1 py-1 border border-slate-700/30 shadow-inner">
