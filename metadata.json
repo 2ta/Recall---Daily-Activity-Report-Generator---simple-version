@@ -1,0 +1,7 @@
+{
+  "name": "Recall - Daily Activity & Report Generator - simple version",
+  "description": "A seamless activity logger that helps you track your day and uses Gemini AI to generate daily summaries and weekly status reports for your manager.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
