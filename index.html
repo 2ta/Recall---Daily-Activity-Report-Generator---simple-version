@@ -3,10 +3,13 @@
 <html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#020617">
     <title>Recall</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
     <script>
       tailwind.config = {
         darkMode: 'class',
@@ -21,6 +24,9 @@
                 900: '#0f172a',
                 950: '#020617',
               }
+            },
+            screens: {
+              'xs': '375px',
             }
           },
         },
@@ -29,30 +35,43 @@
     <style>
       /* Custom scrollbar for Webkit */
       ::-webkit-scrollbar {
-        width: 8px;
-        height: 8px;
+        width: 6px;
+        height: 6px;
       }
       ::-webkit-scrollbar-track {
-        background: #0f172a; 
+        background: transparent; 
       }
       ::-webkit-scrollbar-thumb {
         background: #334155; 
-        border-radius: 4px;
+        border-radius: 10px;
       }
-      ::-webkit-scrollbar-thumb:hover {
-        background: #475569; 
+      
+      /* Prevents pull-to-refresh and elastic bounce on mobile which breaks app feel */
+      html, body {
+        overscroll-behavior-y: none;
+        overflow: hidden;
+        -webkit-tap-highlight-color: transparent;
       }
+
       /* Safe area spacing for mobile */
       .pb-safe {
         padding-bottom: env(safe-area-inset-bottom, 20px);
       }
-      /* Animation for sync icon */
+      .pt-safe {
+        padding-top: env(safe-area-inset-top, 0px);
+      }
+      
       @keyframes spin-slow {
         from { transform: rotate(0deg); }
         to { transform: rotate(360deg); }
       }
       .animate-spin-slow {
         animation: spin-slow 3s linear infinite;
+      }
+
+      /* Mobile optimized transitions */
+      .transition-transform-ease {
+        transition: transform 0.2s cubic-bezier(0.33, 1, 0.68, 1);
       }
     </style>
   <script type="importmap">

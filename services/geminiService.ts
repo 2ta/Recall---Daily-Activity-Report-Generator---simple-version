@@ -1,5 +1,4 @@
 
-// Fix: Removed invalid 'Schema' import and ensured 'Type' is available for responseSchema definition
 import { GoogleGenAI, Type } from "@google/genai";
 import { LogEntry, ReportType, AnalysisResult } from '../types';
 import { SYSTEM_INSTRUCTION } from '../constants';
@@ -23,12 +22,35 @@ export const generateSummary = async (logs: LogEntry[], type: ReportType): Promi
     
     let prompt = "";
     if (type === ReportType.DAILY_REFLECTION) {
-      prompt = `Here are my logs for today. Please help me reflect on my day. summarize what I accomplished and how I spent my time.\n\nLogs:\n${formattedLogs}`;
+      prompt = `Here are my logs for today. Please help me reflect on my day.
+      
+      Goal: Create a narrative summary of my day.
+      - Highlight 2-3 key accomplishments.
+      - Identify any time gaps or distractions if apparent, but be gentle.
+      - End with a motivating thought for tomorrow.
+      
+      Logs:
+      ${formattedLogs}`;
     } else {
-      prompt = `Here are my logs. Please generate a professional weekly status report I can send to my manager. Categorize the work and highlight completed items.\n\nLogs:\n${formattedLogs}`;
+      prompt = `Here are my logs. Please generate a professional status report.
+      
+      Format:
+      ## Executive Summary
+      (2-3 sentences)
+      
+      ## Key Deliverables
+      - (Bullet points of completed work)
+      
+      ## Timeline / Activities
+      - (Grouped by category like "Meetings", "Deep Work", "Admin")
+      
+      ## Next Steps / Blockers
+      (Inferred from context or state "None" if unclear)
+      
+      Logs:
+      ${formattedLogs}`;
     }
 
-    // Fix: Updated model to 'gemini-3-flash-preview' for basic text summarization tasks
     const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',
       contents: prompt,
@@ -41,7 +63,7 @@ export const generateSummary = async (logs: LogEntry[], type: ReportType): Promi
     return response.text || "Could not generate summary.";
   } catch (error) {
     console.error("Error generating summary:", error);
-    return "An error occurred while communicating with the AI. Please check your API key and connection.";
+    return "An error occurred while communicating with the AI. Please check your network connection.";
   }
 };
 
@@ -49,11 +71,10 @@ export const analyzeDay = async (logs: LogEntry[]): Promise<AnalysisResult> => {
   try {
     const formattedLogs = formatLogsForPrompt(logs);
     
-    // Fix: Updated model to 'gemini-3-flash-preview' for text analysis tasks
     const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',
       contents: `Analyze the following daily logs. 
-      1. Create a very brief, punchy 1-sentence summary of the main focus of the day.
+      1. Create a very brief, punchy 1-sentence summary of the main focus of the day (e.g. "Heavy focus on frontend debugging with some afternoon meetings").
       2. Identify the IDs of the logs that represent key achievements, important decisions, or completed tasks (the "highlights").
       
       Logs:
